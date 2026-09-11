@@ -63,8 +63,11 @@ export const COPY = {
   },
 };
 
+const rawBase = import.meta.env.BASE_URL || '/';
+const normalizedBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
 export const VIDEO_CONFIG = {
-  src: '/assets/video/me-wave.mp4',
-  fallbackSrc: '/assets/video/me-wave.mov',
+  src: `${normalizedBase}assets/video/me-wave.mp4`,
+  fallbackSrc: `${normalizedBase}assets/video/me-wave.mov`,
   aspectRatio: '9 / 16',
 };
