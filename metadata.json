@@ -1,0 +1,6 @@
+{
+  "name": "FACE TO FACE",
+  "description": "A warm, interactive invitation asking a good friend to catch up over coffee.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

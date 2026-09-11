@@ -1,0 +1,245 @@
+@import './tokens.css';
+
+/* ==========================================================================
+   RESET & BEST FRIEND CANVAS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-stage-void);
+  color: var(--text-pure);
+  font-family: var(--font-serif-poetic);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+/* Scroll canvas driving the gentle progression */
+.scroll-canvas {
+  position: relative;
+  width: 100%;
+  height: 650vh;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   CINEMATIC 3D STAGE (100vw x 100vh FIXED CONTAINER)
+   Inspired by Obsidian MotionSites styling with warm golden champagne lighting
+   ========================================================================== */
+.cinematic-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  pointer-events: auto;
+  user-select: none;
+  background: var(--bg-stage-gradient);
+  perspective: 1400px;
+  z-index: 1;
+}
+
+/* Base Stage */
+.layer-stage-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 50% 32%,
+    #FFFFFF 0%,
+    #FAF6F0 45%,
+    #EFE7DA 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Radiant Sunset Amber Aura (Soft sunlit warmth) */
+.layer-gold-aurora {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  width: min(92vw, 1100px);
+  height: min(88vh, 880px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 48%,
+    rgba(245, 158, 11, 0.18) 0%,
+    rgba(251, 191, 36, 0.12) 36%,
+    rgba(254, 243, 199, 0.08) 58%,
+    transparent 78%
+  );
+  filter: blur(85px);
+  z-index: 10;
+  pointer-events: none;
+  animation: gold-pulse-glow 9s ease-in-out infinite alternate;
+}
+
+/* Secondary Warm Honey Peach Bloom */
+.layer-peach-bloom {
+  position: absolute;
+  bottom: 0%;
+  left: 25%;
+  width: 65vw;
+  height: 50vh;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 36, 0.12) 0%,
+    rgba(245, 158, 11, 0.06) 42%,
+    transparent 72%
+  );
+  filter: blur(95px);
+  z-index: 11;
+  pointer-events: none;
+  animation: gold-float-secondary 12s ease-in-out infinite alternate;
+}
+
+/* Architectural Warm Stage Floor Reflection (Light, clean) */
+.layer-stage-floor {
+  position: absolute;
+  bottom: -22%;
+  left: -25%;
+  width: 150vw;
+  height: 55vh;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(254, 243, 199, 0.4) 30%,
+    rgba(245, 237, 226, 0.8) 70%,
+    #EFE7DA 100%
+  );
+  transform: rotateX(76deg);
+  transform-origin: 50% 100%;
+  filter: blur(15px);
+  opacity: 0.85;
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* Frosted Milk Glass Card Styling (Light, warm, no dark colors) */
+.obsidian-glass-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(217, 119, 6, 0.22);
+  box-shadow: 0 25px 65px rgba(120, 53, 15, 0.08), 0 0 40px rgba(245, 158, 11, 0.12);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Milk Glass Delicate Satin Highlight */
+.obsidian-glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(254, 243, 199, 0.2) 35%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Soft Warm Amber Ambient Perimeter (No dark vignette!) */
+.layer-vignette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 55%,
+    rgba(245, 237, 226, 0.4) 80%,
+    rgba(235, 222, 206, 0.65) 100%
+  );
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* Subtle Warm Paper Texture */
+.layer-grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filmGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filmGrain)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  mix-blend-mode: multiply;
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* Keyframes */
+@keyframes luxury-pulse-glow {
+  0% {
+    transform: translate(-50%, -10%) scale(0.97);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -9%) scale(1.03);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -10%) scale(0.97);
+    opacity: 0.7;
+  }
+}
+
+@keyframes gold-pulse-glow {
+  0% {
+    transform: translate(-50%, -10%) scale(0.96);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -8%) scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -10%) scale(0.97);
+    opacity: 0.88;
+  }
+}
+
+@keyframes gold-float-secondary {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(25px, -15px, 0) scale(1.06);
+  }
+}
+
+@keyframes subtle-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtle-float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
